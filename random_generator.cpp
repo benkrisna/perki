@@ -29,15 +29,8 @@ void init(int& num_p, std::vector<int>& num_in_group , std::vector<std::string>&
 	}
 }
 
-
-int main(int argc, char* argv[])
+std::vector<int> makeGroupDist (int num_people)
 {
-	srand((int)time(0));
-	std::vector<std::string> list_groups;
-	std::vector<int> num_in_group;
-	int num_people;
-	init(num_people,num_in_group,list_groups);
-	std::cout << num_people << "\n";
 	std::string bs;
 	while (bs != "big" and bs != "small")
 	{
@@ -81,10 +74,11 @@ int main(int argc, char* argv[])
 		}
 		n--;
 	}
-	for (int i = 0 ; i < group_dist.size() ; i++)
-	{
-		std::cout << group_dist[i] << "\n";
-	}
+	return group_dist;
+}
+
+void roll(std::vector<int> group_dist, std::vector<std::string> list_groups, std::vector<int> num_in_group)
+{
 	for (int i = 0 ; i < group_dist.size() ; i++)
 	{
 		while (group_dist[i]>0)
@@ -100,6 +94,28 @@ int main(int argc, char* argv[])
 		}
 		std::cout << "\n";
 	}	
+}
+int main(int argc, char* argv[])
+{
+	srand((int)time(0));
+	std::vector<std::string> list_groups;
+	std::vector<int> num_in_group;
+	int num_people;
+	init(num_people,num_in_group,list_groups);
+	std::cout << num_people << "\n";
+	std::vector<int> group_dist = makeGroupDist(num_people);
+	for (int i = 0 ; i < group_dist.size() ; i++)
+	{
+		std::cout << group_dist[i] << "\n";
+	}
+	std::string reroll;
+	while (reroll != "n")
+	{
+
+		roll(group_dist,list_groups,num_in_group);
+		std::cout << "reroll (y/n)" << "\n";
+		std::cin >> reroll ;
+	}
 	return 0;
 }
 
